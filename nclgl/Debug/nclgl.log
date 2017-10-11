@@ -1,0 +1,18 @@
+﻿  HeightMap.cpp
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.hpp(4240): warning C4996: 'clCreateSampler': was declared deprecated
+  h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.h(1366): note: see declaration of 'clCreateSampler'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.hpp(5084): warning C4996: 'clCreateCommandQueue': was declared deprecated
+  h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.h(1359): note: see declaration of 'clCreateCommandQueue'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.hpp(5101): warning C4996: 'clCreateCommandQueue': was declared deprecated
+  h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.h(1359): note: see declaration of 'clCreateCommandQueue'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.hpp(5878): warning C4996: 'clEnqueueTask': was declared deprecated
+  h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\amd app sdk\3.0\include\cl\cl.h(1373): note: see declaration of 'clEnqueueTask'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(121): warning C4018: '>=': signed/unsigned mismatch
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(121): warning C4305: '*=': truncation from 'double' to 'float'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(128): warning C4305: 'initializing': truncation from 'double' to 'float'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(128): warning C4018: '>=': signed/unsigned mismatch
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(128): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(128): warning C4305: '*=': truncation from 'double' to 'float'
+h:\masters\dissertation jamie horwell\dissertation sphere collision\dissertation sphere collision\graphics code 2015\nclgl\heightmap.cpp(175): warning C4018: '<': signed/unsigned mismatch
+Light.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  nclgl.vcxproj -> H:\Masters\Dissertation Jamie Horwell\Dissertation sphere collision\Dissertation sphere collision\Graphics Code 2015\Graphics For Games\Debug\nclgl.lib

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="MD5Anim.cpp" />
+    <ClCompile Include="MD5FileData.cpp" />
+    <ClCompile Include="MD5Mesh.cpp" />
+    <ClCompile Include="MD5Node.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="OBJMesh.cpp" />
+    <ClCompile Include="OGLRenderer.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="HeightMap.cpp" />
+    <ClCompile Include="GPUfluidProcessor.cpp" />
+    <ClCompile Include="OpenCLSetup.cpp" />
+    <ClCompile Include="TextMesh.cpp" />
+    <ClCompile Include="RenderObject.cpp" />
+    <ClCompile Include="OpenCLprocessor.cpp" />
+    <ClCompile Include="HeterogeneousProcessor.cpp" />
+    <ClCompile Include="GPUProcessor.cpp" />
+    <ClCompile Include="Matrix3.cpp" />
+    <ClCompile Include="Light.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="ChildMeshInterface.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="InputDevice.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="MD5Anim.h" />
+    <ClInclude Include="MD5FileData.h" />
+    <ClInclude Include="MD5Mesh.h" />
+    <ClInclude Include="MD5Node.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="OBJMesh.h" />
+    <ClInclude Include="OGLRenderer.h" />
+    <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Vector4.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="HeightMap.h" />
+    <ClInclude Include="GPUfluidProcessor.h" />
+    <ClInclude Include="OpenCLSetup.h" />
+    <ClInclude Include="TextMesh.h" />
+    <ClInclude Include="RenderObject.h" />
+    <ClInclude Include="OpenCLprocessor.h" />
+    <ClInclude Include="HeterogeneousProcessor.h" />
+    <ClInclude Include="GPUProcessor.h" />
+    <ClInclude Include="Matrix3.h" />
+    <ClInclude Include="Light.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{cc37da46-01ec-46dc-b223-03af795ab55a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\basicVertex.glsl.txt">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\..\..\colourFragment.glsl.txt">
+      <Filter>Shaders</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

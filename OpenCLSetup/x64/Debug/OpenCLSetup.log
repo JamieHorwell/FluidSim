@@ -1,0 +1,9 @@
+﻿Build started 22/02/2017 03:02:57.
+     1>Project "c:\Users\Jamie\documents\visual studio 2015\Projects\OpenCLTest\OpenCLSetup\OpenCLSetup.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         OpenCLSetup.vcxproj -> c:\users\jamie\documents\visual studio 2015\Projects\OpenCLTest\x64\Debug\OpenCLSetup.lib
+     1>Done Building Project "c:\Users\Jamie\documents\visual studio 2015\Projects\OpenCLTest\OpenCLSetup\OpenCLSetup.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.03
