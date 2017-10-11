@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsLoop.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsCalculator.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="FluidSimulator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="PhysicsLoop.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCalculator.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="FluidSimulator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{d75615bb-438f-491d-a33a-c0434c020526}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
