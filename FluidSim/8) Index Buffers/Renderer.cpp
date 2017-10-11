@@ -10,6 +10,9 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	//setup basic shaders
 	currentShader = new Shader("../../Shaders/PerPixelVertex.glsl",
 		"../../Shaders/PerPixelFragment.glsl");
+
+
+
 	
 	text = LoadTexture("../../Textures/lava.png");
 	
@@ -154,6 +157,8 @@ void Renderer::RenderScene() {
 	SetShaderLight(*light);
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
 		"diffuseTex"), 0);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"bumpTex"), 1);
 	glEnable(GL_DEPTH_TEST);
 
 
