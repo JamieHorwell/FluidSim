@@ -8,8 +8,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	
 
 	//setup basic shaders
-	currentShader = new Shader("../../Shaders/PerPixelVertex.glsl",
-		"../../Shaders/PerPixelFragment.glsl");
+	currentShader = new Shader("../../Shaders/bumpVertex.glsl",
+		"../../Shaders/bumpFragment.glsl");
 
 
 

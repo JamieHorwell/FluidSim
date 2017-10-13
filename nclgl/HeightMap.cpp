@@ -119,11 +119,11 @@ void HeightMap::updateFluid()
 void HeightMap::updateSimpleCPU()
 {
 
-	for (int i = 0; i < this->height; ++i) {		for (int j = 0; j < this->height; ++j) {			int index = i + (j * height);			int indexUp = index - 1;			if (indexUp % height == (height - 1) || indexUp < 0) {				indexUp = index;			}			int indexDown = index + 1;			if (indexDown % height == 0) {				indexDown = index;			}			int indexLeft = index - height;			if (indexLeft < 0) {				indexLeft = index;			}			int indexRight = index + height;			if (indexRight >= numVertices) {				indexRight = index;			}						velocities[index] += (vertices[indexUp].y + vertices[indexDown].y + vertices[indexLeft].y + vertices[indexRight].y) / 4 - vertices[index].y;			velocities[index] *= 0.667;			vertices[index] += Vector3(0, velocities[index], 0);		}	}
+	for (int i = 0; i < this->height; ++i) {		for (int j = 0; j < this->height; ++j) {			int index = i + (j * height);			int indexUp = index - 1;			if (indexUp % height == (height - 1) || indexUp < 0) {				indexUp = index;			}			int indexDown = index + 1;			if (indexDown % height == 0) {				indexDown = index;			}			int indexLeft = index - height;			if (indexLeft < 0) {				indexLeft = index;			}			int indexRight = index + height;			if (indexRight >= numVertices) {				indexRight = index;			}						velocities[index] += (vertices[indexUp].y + vertices[indexDown].y + vertices[indexLeft].y + vertices[indexRight].y) / 4 - vertices[index].y;			velocities[index] *= 0.667;			vertices[index].y += velocities[index];		}	}
 
 
-	GenerateNormals();
-	GenerateTangents();
+	//GenerateNormals();
+	//GenerateTangents();
 	RebufferData();
 }
 
