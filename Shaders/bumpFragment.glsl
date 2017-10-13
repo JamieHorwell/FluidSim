@@ -45,7 +45,7 @@
  FragColor.rgb += ( diffuse.rgb * lightColour.rgb ) * 0.1;
  
  //first see if any colour appears
- FragColor = vec4(1,0,0,0.7);
+ //FragColor = vec4(1,0,0,0.7);
  
  //next see if texCoord are being correctly shown
  //FragColor = vec4(1,IN.texCoord.y,IN.texCoord.x,1);

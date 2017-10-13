@@ -137,6 +137,7 @@ void HeightMap::updateSimpleCPU()
 	
 	
 	GenerateNormals();
+	GenerateTangents();
 	RebufferData();}
 void HeightMap::updateOpenCL()
 {

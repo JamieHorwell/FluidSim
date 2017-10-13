@@ -147,7 +147,7 @@ int main() {
 
 
 	/*CHANGE PARAMETERS HERE FOR DIFFERENT FLUID REPRESENTATIONS*/
-	HeightMap* fluid = new HeightMap("../../Textures/terrain.raw", Processor::CPU, true, true, 257);
+	HeightMap* fluid = new HeightMap("../../Textures/terrain.raw", Processor::CPU, false, true, 257);
 	fluid->SetTexture(Renderer::LoadTexture("../../Textures/lava.png"));
 
 	fluid->SetBumpMap(SOIL_load_OGL_texture("../Textures/lava_NRM.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));

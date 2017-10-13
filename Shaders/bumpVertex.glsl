@@ -1,3 +1,4 @@
+
 #version 150 core
  uniform mat4 modelMatrix;
  uniform mat4 viewMatrix;
@@ -9,7 +10,6 @@
  in vec3 normal; // New Attribute !
  in vec3 tangent;
  in vec2 texCoord;
- 
 
  out Vertex {
  vec4 colour;
@@ -26,11 +26,11 @@
 
  mat3 normalMatrix = transpose ( inverse ( mat3 ( modelMatrix )));
 
- OUT.normal = normalize ( normalMatrix * normalize ( normal ));
- OUT.tangent = normalize( normalMatrix * normalize(tangent));
- OUT.binormal = normalize(normalMatrix * normalize(cross(normal,tangent));
+OUT.normal = normalize ( normalMatrix * normalize ( normal ));
+OUT.tangent = normalize( normalMatrix * normalize(tangent));
+OUT.binormal = normalize(normalMatrix * normalize(cross(normal,tangent)));
 
  OUT.worldPos = ( modelMatrix * vec4 ( position ,1)).xyz;
  gl_Position = ( projMatrix * viewMatrix * modelMatrix ) *
  vec4 ( position , 1.0);
-}
+}
