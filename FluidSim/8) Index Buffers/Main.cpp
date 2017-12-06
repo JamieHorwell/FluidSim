@@ -1,7 +1,7 @@
 #include "../../nclgl/window.h"
 #include "Renderer.h"
 #include <iostream>
-#include "../../nclgl/HeightMap.h"
+#include "../../nclgl/Fluid.h"
 #include "Entity.h"
 #include "PhysicsLoop.h"
 #include <fstream>
@@ -11,12 +11,6 @@
 using namespace std;
 
 /*values to handle returning normalized mouse co-ordinates*/
-#define WIDTH           1920.0f
-#define HEIGHT          1080.0f
-#define WIDTH_DIV_2      (WIDTH*0.5f)
-#define HEIGHT_DIV_2     (HEIGHT*0.5f)
-#define ASPECT            1.3333f
-
 
 
 /*
@@ -41,7 +35,7 @@ TODO:
 
 */
 
-void getInput(HeightMap *& fluid1, Shader* shader, RenderObject* fluidObj, Renderer* r, Entity*& sphere) {
+void getInput(Fluid *& fluid1, Shader* shader, RenderObject* fluidObj, Renderer* r, Entity*& sphere) {
 	
 	//if (Window::GetKeyboard()->KeyDown(KEYBOARD_1)) {
 	//	r->deleteRenderObjects();
@@ -106,104 +100,89 @@ void getInput(HeightMap *& fluid1, Shader* shader, RenderObject* fluidObj, Rende
 
 //move back (s) and up (shift) to see heightmap
 int main() {
-	Window w("Index Buffers!", 1920, 1080, false);
+	Window w("Index Buffers!", 1280, 720, false);
 	if (!w.HasInitialised()) {
 		return -1;
 	}
 	_controlfp(_MCW_PC, _PC_24);
 	Renderer* renderer = new Renderer(w);
-	//Renderer renderer(w);
 	if (!renderer->HasInitialised()) {
 		return -1;
 	}
 
 	
-	
-
-
-
 	w.LockMouseToWindow(false);
 	w.ShowOSPointer(true);
 	
-	float mouseX;
-	float mouseY;
-	float	dx;
-	float dy;
-	float FOV = 45;
-	float nearr = 1.0;
-	float farr = 10000;
 
 
-	//default shader for all objects
-	Shader* defaultShader = new Shader("../../Shaders/vertNormals.glsl",
-		"../../Shaders/phong.glsl");
 
+	//Setup Shaders
+	Shader* defaultShader = new Shader("../../Shaders/vertNormals.glsl", "../../Shaders/phong.glsl");
+	defaultShader->LinkProgram();
 
-	//setup meshes to use
-	OBJMesh* sphereMesh = new OBJMesh(MESHDIR"sphere.obj");
-	sphereMesh->SetTexture(SOIL_load_OGL_texture(
-		"../../Textures/lava.png",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	Shader* fluidShader = new Shader("../../Shaders/TexturedVertex.glsl", "../../Shaders/TexturedFragment.glsl");
+	fluidShader->LinkProgram();
 
+	Shader* textShader = new Shader("../../Shaders/TexturedVertex.glsl","../../Shaders/TexturedFragment.glsl");
+	textShader->LinkProgram();
 
+	Shader* sphereShader = new Shader("../../Shaders/TexturedVertex.glsl", "../../Shaders/TexturedFragment.glsl");
+	sphereShader->LinkProgram();
+
+	//Setup Sphere
+	RenderObject* sphereObject = new RenderObject(new OBJMesh(MESHDIR"sphere.obj"), sphereShader, Renderer::LoadTexture("../../Textures/lava.png"));
+	sphereObject->GetMesh()->SetTexture(SOIL_load_OGL_texture("../../Textures/lava.png",SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	//Setup Fluid
 	/*CHANGE PARAMETERS HERE FOR DIFFERENT FLUID REPRESENTATIONS*/
-	HeightMap* fluid = new HeightMap("../../Textures/terrain.raw", Processor::CPU, false, true, 257);
+	Fluid* fluid = new Fluid("../../Textures/terrain.raw", Processor::CPU, true, true, 257);
 	fluid->SetTexture(Renderer::LoadTexture("../../Textures/lava.png"));
-
 	fluid->SetBumpMap(SOIL_load_OGL_texture("../Textures/lava_NRM.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-
-
-	RenderObject* fluidObject = new RenderObject(fluid, defaultShader, Renderer::LoadTexture("../../Textures/lava.png"));
-
-	RenderObject* sphereObject = new RenderObject(sphereMesh, defaultShader, Renderer::LoadTexture("../../Textures/lava.png"));
+	RenderObject* fluidObject = new RenderObject(fluid, fluidShader, Renderer::LoadTexture("../../Textures/lava.png"));
 	fluidObject->SetModelMatrix(Matrix4::Translation(Vector3(0, 0, 0)));
 	
-	Entity* sphereEnt = new Entity(Vector3(100,55,100), 10, 10, 13, sphereObject);
-	//55, 100
 
-	sphereObject->GetMesh()->SetTexture(SOIL_load_OGL_texture(
-		"../../Textures/lava.png",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	//Entity for sphere to communicate physics updates to renderer of sphere
+	Entity* sphereEnt = new Entity(Vector3(100,55,100), 10, 10, 13, sphereObject);
+	
+
 
 	//add renderObjects
 	renderer->AddRenderObject(fluidObject);
 	renderer->setFluid(fluid);
 	renderer->AddRenderObject(sphereEnt->getRendObj());
 
-
+	//Setup Physics
 	PhysicsLoop pl;
-
 	pl.sphere = sphereEnt;
 	pl.fluid = fluid;
 	
-	ofstream myfile;
-	
+	bool updatePhys = true;
 
 	float t = 0;
-
 	while (true) {
 		if (fluid != nullptr) {
 			w.GetTimer()->GetTimedMS();
 			fluid->updateFluid();
 			t = w.GetTimer()->GetTimedMS();
-			pl.updatePhysics(0.0033);
+			
+			if(updatePhys) pl.updatePhysics(0.0033);
 			
 		}
-		
-
 		getInput(fluid, defaultShader, fluidObject, renderer, sphereEnt);
-		renderer->UpdateScene(t);
-		w.UpdateWindow();
-		if (w.GetTimer()->GetMS() > 5000) {
-			//close the file
-			
+		if (w.GetKeyboard()->KeyTriggered(KEYBOARD_H)) {
+			updatePhys = false;
 		}
+		renderer->UpdateScene(t);
+		renderer->RenderScene();
+		w.UpdateWindow();
 	}
 
 
 
 	delete fluid;
-	delete sphereMesh;
+	
 	
 	return 0;
 }

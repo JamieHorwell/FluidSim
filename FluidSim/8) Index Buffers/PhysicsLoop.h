@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "PhysicsCalculator.h"
-#include "../../nclgl/HeightMap.h"
+#include "../../nclgl/Fluid.h"
 #include "../../nclgl/Vector2.h"
 
 #define gravity -40.0f
@@ -27,21 +27,21 @@ public:
 
 
 
-	Vector3 ForceFromFluidColumn(HeightMap*  fluid, int index, float displacement);
+	Vector3 ForceFromFluidColumn(Fluid*  fluid, int index, float displacement);
 
 
 	//to check each individual column within spheres bounds
 	bool SphereInColumn(Vector3 column, Vector3 sphereCentre, float radius);
 
-	void SphereFluidCollision(Entity* sphere,HeightMap* fluid);
+	void SphereFluidCollision(Entity* sphere,Fluid* fluid);
 
-	void SphereColumnResolution(Entity* sphere, HeightMap* fluid, int index);
+	void SphereColumnResolution(Entity* sphere, Fluid* fluid, int index);
 
-	void distributefluid(HeightMap* fluid, Vector3 pointA, Vector3 pointB, float fluidD);
+	void distributefluid(Fluid* fluid, Vector3 pointA, Vector3 pointB, float fluidD);
 
 
 	Entity* sphere;
-	HeightMap* fluid;
+	Fluid* fluid;
 
 };
 

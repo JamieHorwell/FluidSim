@@ -55,7 +55,7 @@ void PhysicsLoop::updatePhysics(float tStep)
 
 
 //to be called after displacement from sphere 
-Vector3 PhysicsLoop::ForceFromFluidColumn(HeightMap * fluid, int index, float displacement)
+Vector3 PhysicsLoop::ForceFromFluidColumn(Fluid * fluid, int index, float displacement)
 {
 	float force;
 	force = -displacement * (fluid->getVertice(index).y*fluid->getVertice(index).y) * FLUID_DENSITY * gravity;
@@ -73,7 +73,7 @@ bool PhysicsLoop::SphereInColumn(Vector3 column, Vector3 sphereCentre, float rad
 	else  true;
 }
 
-void PhysicsLoop::SphereFluidCollision(Entity * sphere, HeightMap* fluid)
+void PhysicsLoop::SphereFluidCollision(Entity * sphere, Fluid* fluid)
 {
 	//check whether sphere is in column
 
@@ -121,9 +121,8 @@ void PhysicsLoop::SphereFluidCollision(Entity * sphere, HeightMap* fluid)
 
 }
 
-void PhysicsLoop::SphereColumnResolution(Entity* sphere, HeightMap* fluid, int index)
+void PhysicsLoop::SphereColumnResolution(Entity* sphere, Fluid* fluid, int index)
 {
-	
 	//need to push fluid below circumference of sphere
 
 	//hyp is radius
@@ -139,17 +138,13 @@ void PhysicsLoop::SphereColumnResolution(Entity* sphere, HeightMap* fluid, int i
 
 
 	//fluid displacement = fluid height - adj
-	
 	float fluidD = fluid->getVertice(index).y - adj;
 	if (fluidD > 0) {
 		fluid->updateVelocity(index, -fluidD);
 		sphereTofluid.Normalise();
 
-
-
 		Vector3 pointA;
 		Vector3 pointB;
-
 
 		//determine 2 coords to draw line between to evenly disperse fluid
 		if (sphereTofluid.x < 0) {
@@ -160,7 +155,6 @@ void PhysicsLoop::SphereColumnResolution(Entity* sphere, HeightMap* fluid, int i
 
 			//now we have one point to interpolate from
 			pointA = fluid->getVertice(index + step);
-
 
 			//fluid->updateVelocity(index + step, fluidD/4);
 			//fluid->setVertice(index + step, fluid->getVertice(index + step).y + fluidD / 2);
@@ -218,14 +212,6 @@ void PhysicsLoop::SphereColumnResolution(Entity* sphere, HeightMap* fluid, int i
 		distributefluid(fluid, pointA, pointB, fluidD);
 
 
-
-
-
-
-
-
-
-
 		//now apply force back against sphere!!!
 		//try apply in direction of sphere centre? 
 		Vector3 sphereToFluid = sphere->getPosition() - fluid->getVertice(index);
@@ -236,16 +222,14 @@ void PhysicsLoop::SphereColumnResolution(Entity* sphere, HeightMap* fluid, int i
 	}
 	
 
-
-
-
 	//push fluid away from sphere centre?
 	//get direction vector away from centre
 	
 
 }
 
-void PhysicsLoop::distributefluid(HeightMap * fluid, Vector3 pointA, Vector3 pointB, float fluidD)
+//distrubute the fluid  equally in all interpolated collumns between pointA and pointB
+void PhysicsLoop::distributefluid(Fluid * fluid, Vector3 pointA, Vector3 pointB, float fluidD)
 {
 	Vector3 direction = pointB - pointA;
 
@@ -286,15 +270,16 @@ void PhysicsLoop::distributefluid(HeightMap * fluid, Vector3 pointA, Vector3 poi
 	float error = 0.0f;
 
 
-	float fluiadded = 0;
+	float fluidAdded = 0;
 	
 	for (int i = 0; i < range; ++i) {
 		//distribute fluid
 		int index = x + (z*fluid->getHeight());
-
-		fluid->updateVelocity(index , ((fluidD / range)));
+		//as were manipulating velocities, this will be dampened over many iterations, thus we will actually lose fluid unless we add a tiny bit more than the sphere displaced 
+		//this only applys if velocities are being dampened every frame
+		fluid->updateVelocity(index , ((fluidD / range)*1.00039));
 		error += absSlope;
-		fluiadded += (fluidD / range);
+		fluidAdded += (fluidD / range);
 		if (error > 0.5f) {
 			error -= 1.0f;
 			(*target) += targetVal;

@@ -12,11 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Fluid.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GPUfluidProcessor.cpp" />
     <ClCompile Include="GPUProcessor.cpp" />
-    <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="HeterogeneousProcessor.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -44,11 +44,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChildMeshInterface.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="Fluid.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GPUfluidProcessor.h" />
     <ClInclude Include="GPUProcessor.h" />
-    <ClInclude Include="HeightMap.h" />
     <ClInclude Include="HeterogeneousProcessor.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Keyboard.h" />

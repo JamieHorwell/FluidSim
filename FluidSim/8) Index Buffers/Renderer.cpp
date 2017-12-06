@@ -7,11 +7,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera(-14, 266, Vector3(-167, 100, 71));
 	
 
-	//setup basic shaders
+	//Setup Shaders
 	currentShader = new Shader("../../Shaders/bumpVertex.glsl",
 		"../../Shaders/bumpFragment.glsl");
 
-
+	textShader = new Shader("../../Shaders/TexturedVertex.glsl", "../../Shaders/TexturedFragment.glsl");
+	textShader->LinkProgram();
 
 	
 	text = LoadTexture("../../Textures/lava.png");
@@ -37,7 +38,6 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	myfile.open("FluidResults.txt");
-	//SetShaderLight(Vector3(0, 200.0f, 0), Vector3(1, 1, 1), 2000.0f);
 
 	init = true;
 
@@ -59,19 +59,19 @@ Renderer::~Renderer(void) {
 
 void	Renderer::Render(const RenderObject &o) {
 	Matrix3 rotation = Matrix3(viewMatrix);
-	 Vector3 invCamPos = viewMatrix.GetPositionVector();
+	Vector3 invCamPos = viewMatrix.GetPositionVector();
+	Vector3 camPos = rotation * -invCamPos; 
 	
-	Vector3 camPos = rotation * -invCamPos; // invert the
 	
-		
-
-
-	modelMatrix = o.GetWorldTransform();
+	
 	if (o.GetShader() && o.GetMesh() && o.GetTexture()) {
 		SetTextureRepeating(o.GetMesh()->GetTexture(), true);
-		glUseProgram(currentShader->GetProgram());
-		
+		glUseProgram(o.GetShader()->GetProgram());
+		modelMatrix = o.GetWorldTransform();
+
 		glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0);
+
+
 		glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "cameraPos"), 1,(float*)&camPos);
 		UpdateShaderMatrices();
 		
@@ -81,6 +81,7 @@ void	Renderer::Render(const RenderObject &o) {
 	for (vector<RenderObject*>::const_iterator i = o.GetChildren().begin(); i != o.GetChildren().end(); ++i) {
 		Render(*(*i));
 	}
+	glUseProgram(0);
 }
 
 
@@ -92,56 +93,29 @@ void	Renderer::Render(const RenderObject &o) {
 
 
 void Renderer::UpdateScene(float msec) {
-	
 	camera->UpdateCamera(msec);
-	viewMatrix = camera->BuildViewMatrix();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	SetShaderLight(*light);
-	
-
+	totaltime += msec;
+	int newfps = 1 / (msec / 1000);
 	for (vector<RenderObject*>::iterator i = renderObjects.begin(); i != renderObjects.end(); ++i) {
 		if ((*i) != nullptr) {
 			if ((*i)->GetMesh() != NULL) {
-
 				(*i)->Update(msec);
-				Render(*(*i));
 			}
-		}
-		
-	}
-	totaltime += msec;
-	int newfps = 1 / (msec / 1000);
-	if (newfps > maxfps) {
-		maxfps = newfps;
-	}
-	string textToDisplay = "FPS: " + std::to_string(maxfps);
-	//textToDisplay = "msec: " + std::to_string(msec);
-	DrawText(textToDisplay, Vector3(0, 22, 0), 18);
 
-	//check total fluid every so often
+		}
+
+	}
+	fps = "FPS: " + std::to_string(newfps);
 	count++;
 	if (fluid != nullptr) {
 		if (count > 100) {
-			totalFluid = fluid->totalFluid();
-			if (totaltime < 30000) {
-				myfile << totalFluid << "\n";
-			}
-			else {
-				myfile.close();
-			}
-			count = 0;
+			totalFluid =  fluid->totalFluid();
+
 		}
-		textToDisplay = "Total Fluid: " + std::to_string(totalFluid);
-		DrawText(textToDisplay, Vector3(0, 42, 0), 18);
-		textToDisplay = fluid->getTitle();
-		DrawText(textToDisplay, Vector3(0, 0, 0), 20);
+		fluidTotal = "Total Fluid: " + std::to_string(totalFluid);
+		
+		
 	}
-	
-
-
-	SwapBuffers();
-
-
 }
 
 
@@ -152,25 +126,29 @@ void Renderer::UpdateScene(float msec) {
 void Renderer::RenderScene() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(currentShader->GetProgram());
-	UpdateShaderMatrices();
-	SetShaderLight(*light);
-	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"diffuseTex"), 0);
-	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"bumpTex"), 1);
-	glEnable(GL_DEPTH_TEST);
 
+	viewMatrix = camera->BuildViewMatrix();
+	for (vector<RenderObject*>::iterator i = renderObjects.begin(); i != renderObjects.end(); ++i) {
+		if ((*i) != nullptr) {
+			if ((*i)->GetMesh() != NULL) {
+				Render(*(*i));
+			}
+		}
 
+	}
+
+	DrawText(fps, Vector3(0,0,1),10);
+	DrawText(fluidTotal, Vector3(0, 10, 1), 10);
 
 	glUseProgram(0);
 	SwapBuffers();
-
 }
 
 
 void Renderer::DrawText(const std::string &text, const Vector3 &position, const float size) {
 	
+
+	SetCurrentShader(textShader);
 	//Create a new temporary TextMesh, using our line of text and our font
 	TextMesh* mesh = new TextMesh(text, *font);
 

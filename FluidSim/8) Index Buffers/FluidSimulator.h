@@ -2,7 +2,7 @@
 #include "../../nclgl/window.h"
 #include "Renderer.h"
 #include <iostream>
-#include "../../nclgl/HeightMap.h"
+#include "../../nclgl/Fluid.h"
 #include "Entity.h"
 #include "PhysicsLoop.h"
 #pragma comment(lib, "nclgl.lib")
@@ -18,7 +18,7 @@ public:
 
 
 private:
-	HeightMap* fluid;
+	Fluid* fluid;
 	Entity* sphere;
 	Renderer* renderer;
 	Window w;

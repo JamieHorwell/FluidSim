@@ -15,6 +15,9 @@
 #define HEIGHTMAP_Y 0.1f
 #define HEIGHTMAP_TEX_X 1.0f / 1.0f
 #define HEIGHTMAP_TEX_Z 1.0f / 1.0f
+
+
+//which processor to run fluid solver on 
 enum class Processor {
 	CPU,
 	GPU,
@@ -22,40 +25,45 @@ enum class Processor {
 };
 
 
-class HeightMap :
+class Fluid:
 	public Mesh
 {
 public:
-	HeightMap(std::string name, Processor processor, bool complex, bool interactive = false, int width = 200);
+	Fluid(std::string name, Processor processor, bool complex, bool interactive = false, int width = 200);
 
-	~HeightMap(void);
-	void increaseVertice(int idx, float height);	virtual void updateFluid();	void updateSimpleCPU();
+	~Fluid(void);	//FLUID UPDATE METHODS	
+
+	void updateFluid();
+	void updateSimpleCPU();
 	void updateComplexCPU();
 	void updateOpenCL();
 	void updateHeteroGenous();
 	void updateInteractiveGPU();
 
+	float totalFluid();
+	void setTitle();
 
+	void blah();
 
 	Vector3 getVertice(int index) { return vertices[index]; };
 	void setVertice(int index, float h) { vertices[index].y = h; };
+
 	int getHeight() { return height; };
 	float getDensity() { return density; };
 
 	void updateVelocity(int index, float velocity) { velocities[index] += velocity; };
-	double totalFluid();
 
 	void updateHeight(int index, float height) { heights[index] += height; };
 
 	bool getGPU() { return GPU; };
 	bool getComplex() { return complex; };
 
-	
 
-	void setTitle();
+
+	
 	string getTitle() { return title; };
 
-	HeightMap& operator=(HeightMap rhs) {	};
+	Fluid& operator=(Fluid rhs) {	};
 
 private:
 	float* heights = NULL;
@@ -70,7 +78,5 @@ private:
 	string title;
 	Processor processorToUse;
 	OpenCLprocessor* openCLProcessor;
-
-
 };
 

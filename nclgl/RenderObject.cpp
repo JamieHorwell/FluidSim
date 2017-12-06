@@ -22,14 +22,12 @@ RenderObject::RenderObject(Mesh*m, Shader*s, GLuint t) {
 RenderObject::~RenderObject(void)
 {
 	delete mesh;
-	delete shader;
 }
 
 
 void RenderObject::Update(float msec) {
 	if (parent) {
 		worldTransform = parent->modelMatrix * modelMatrix;
-		//worldTransform = modelMatrix * parent->modelMatrix;
 	}
 	else {
 		worldTransform = modelMatrix;

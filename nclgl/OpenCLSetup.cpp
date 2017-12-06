@@ -2,6 +2,8 @@
 #include <CL\cl.hpp>
 #include <fstream>
 
+//Boiler-Plate code for setup of OpenCL program
+
 cl::Program CreateProgramGPU(const std::string& file) {
 
 	std::vector<cl::Platform> platforms;

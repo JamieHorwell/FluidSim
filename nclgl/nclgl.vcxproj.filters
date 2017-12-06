@@ -19,7 +19,6 @@
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="GPUfluidProcessor.cpp" />
     <ClCompile Include="OpenCLSetup.cpp" />
     <ClCompile Include="TextMesh.cpp" />
@@ -29,6 +28,7 @@
     <ClCompile Include="GPUProcessor.cpp" />
     <ClCompile Include="Matrix3.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Fluid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -55,7 +55,6 @@
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Frustum.h" />
-    <ClInclude Include="HeightMap.h" />
     <ClInclude Include="GPUfluidProcessor.h" />
     <ClInclude Include="OpenCLSetup.h" />
     <ClInclude Include="TextMesh.h" />
@@ -65,6 +64,7 @@
     <ClInclude Include="GPUProcessor.h" />
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Fluid.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
